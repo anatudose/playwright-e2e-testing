@@ -1,30 +1,29 @@
 import { test as setup, expect } from "@playwright/test";
 import path from "path";
+import { LoginPage } from "../pages/LoginPage";
+import { DashboardPage } from "../pages/DashboardPage";
 
 const authFile = path.join(__dirname, "../../playwright/.auth/user.json");
 
 setup("authenticate", async ({ page }) => {
+  const loginPage = new LoginPage(page);
+  const dashboardPage = new DashboardPage(page);
+
   await page.goto("");
-  await page
-    .getByRole("textbox", { name: "Email Address" })
-    .fill(process.env.EMAIL_ADDRESS!);
-  await page
-    .getByRole("textbox", { name: "Password" })
-    .fill(process.env.PASSWORD!);
-  await page.getByRole("button", { name: "Sign in" }).click();
-  await page.pause();
+  await loginPage.enterEmail(process.env.EMAIL_ADDRESS!);
+  await loginPage.enterPassword(process.env.PASSWORD!);
+  await loginPage.clickSignIn();
+
   await expect(page).toHaveTitle(/Client Portal/);
   await expect(page).toHaveURL(new RegExp("/company-profile-select/*"), {
     timeout: 10_000,
   });
-  await expect(page.getByAltText("logo")).toBeVisible();
-  await expect(
-    page.getByText("Select which company profile you’d like to access")
-  ).toBeVisible();
-  await page.getByText("Devsoft").click();
-  await expect(page.getByRole("heading", { name: "Dashboard" })).not.toBeEmpty({
-    timeout: 20_000,
-  });
+  await expect(loginPage.getLogo).toBeVisible();
+
+  //select company profile
+  await expect(loginPage.getSelectCompanyText).toBeVisible();
+  await loginPage.selectCompanyProfile("Devsoft");
+  await expect(dashboardPage.getDashboardHeading).toBeVisible();
 
   await page.context().storageState({ path: authFile });
 });
