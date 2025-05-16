@@ -2,7 +2,6 @@ import { defineConfig, devices } from "@playwright/test";
 require("dotenv").config();
 
 export default defineConfig({
-  testDir: "./cp/tests",
   /* Run tests in files in parallel */
   fullyParallel: true,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
@@ -15,23 +14,46 @@ export default defineConfig({
   reporter: "html",
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
-    /* Base URL to use in actions like `await page.goto('/')`. */
-    baseURL: "https://nice-glacier-0ed0b2503.5.azurestaticapps.net",
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: "on-first-retry",
   },
 
   /* Configure projects for major browsers */
   projects: [
-    { name: "setup", testMatch: /.*\.setup\.ts/ },
+    {
+      name: "ap_setup",
+      testMatch: "ap/tests/ap_auth.setup.ts",
+      use: {
+        baseURL: "https://thankful-sky-036bea803.5.azurestaticapps.net",
+      },
+    },
 
     {
-      name: "chromium",
+      name: "cp_setup",
+      testMatch: "cp/tests/cp_auth.setup.ts",
       use: {
-        ...devices["Desktop Chrome"],
-        storageState: "playwright/.auth/user.json",
+        baseURL: "https://nice-glacier-0ed0b2503.5.azurestaticapps.net",
       },
-      dependencies: ["setup"],
+    },
+
+    {
+      name: "Admin Portal",
+      testMatch: ["ap/tests/*.spec.ts", "ap/tests/*/*.spec.ts"],
+      use: {
+        baseURL: "https://thankful-sky-036bea803.5.azurestaticapps.net",
+        storageState: "playwright/.auth/admin.json",
+      },
+      dependencies: ["ap_setup"],
+    },
+
+    {
+      name: "Client Portal",
+      testMatch: ["cp/tests/*.spec.ts", "cp/tests/*/*.spec.ts"],
+      use: {
+        baseURL: "https://nice-glacier-0ed0b2503.5.azurestaticapps.net",
+        storageState: "playwright/.auth/client.json",
+      },
+      dependencies: ["cp_setup"],
     },
 
     // {

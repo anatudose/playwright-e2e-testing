@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "popen": "playwright test --ui",
-    "prun": "playwright test --trace on"
+    "prun_all": "playwright test",
+    "prun_cp": "playwright test --project='Client Portal'",
+    "prun_ap": "playwright test --project='Admin Portal'"
   },
   "keywords": [],
   "author": "",

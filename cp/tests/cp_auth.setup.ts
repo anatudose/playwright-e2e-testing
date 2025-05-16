@@ -3,15 +3,15 @@ import path from "path";
 import { LoginPage } from "../pages/LoginPage";
 import { DashboardPage } from "../pages/DashboardPage";
 
-const authFile = path.join(__dirname, "../../playwright/.auth/user.json");
+const cpAuthFile = path.join(__dirname, "../../playwright/.auth/client.json");
 
-setup("authenticate", async ({ page }) => {
+setup("client portal authentication", async ({ page }) => {
   const loginPage = new LoginPage(page);
   const dashboardPage = new DashboardPage(page);
 
   await page.goto("");
-  await loginPage.enterEmail(process.env.EMAIL_ADDRESS!);
-  await loginPage.enterPassword(process.env.PASSWORD!);
+  await loginPage.enterEmail(process.env.CP_EMAIL_ADDRESS!);
+  await loginPage.enterPassword(process.env.CP_PASSWORD!);
   await loginPage.clickSignIn();
 
   await expect(page).toHaveTitle(/Client Portal/);
@@ -23,7 +23,9 @@ setup("authenticate", async ({ page }) => {
   //select company profile
   await expect(loginPage.getSelectCompanyText).toBeVisible();
   await loginPage.selectCompanyProfile("Devsoft");
-  await expect(dashboardPage.getDashboardHeading).toBeVisible();
+  await expect(dashboardPage.getDashboardHeading).toBeVisible({
+    timeout: 10_000,
+  });
 
-  await page.context().storageState({ path: authFile });
+  await page.context().storageState({ path: cpAuthFile });
 });
