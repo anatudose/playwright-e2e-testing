@@ -53,7 +53,7 @@ export default defineConfig({
         baseURL: "https://nice-glacier-0ed0b2503.5.azurestaticapps.net",
         storageState: "playwright/.auth/client.json",
       },
-      dependencies: ["cp_setup"],
+      dependencies: ["cp_setup", "ap_setup"],
     },
 
     // {

@@ -16,4 +16,10 @@ setup("admin portal authentication", async ({ page }) => {
   await expect(page).toHaveTitle(/Admin Portal/);
   await expect(loginPage.getHeading).toBeVisible();
   await page.context().storageState({ path: authFile });
+
+  const sessionStorage = (await page.context().storageState()).origins;
+
+  process.env.AP_BEARER_TOKEN = JSON.parse(
+    `${sessionStorage[0].localStorage[5].value}`
+  ).secret;
 });
