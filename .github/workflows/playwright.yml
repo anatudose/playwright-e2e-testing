@@ -18,7 +18,7 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
       - name: Run Client Portal Tests
-        run: npx playwright test --project='Client Portal --reporter=list
+        run: npx playwright test --project='Client Portal' --reporter=list
         env:
           CP_EMAIL_ADDRESS: ${{secrets.CP_EMAIL_ADDRESS}}
           CP_PASSWORD: ${{secrets.CP_PASSWORD}}
