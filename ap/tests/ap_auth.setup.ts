@@ -14,5 +14,6 @@ setup("admin portal authentication", async ({ page }) => {
   await loginPage.clickSignInButton();
   await loginPage.clickNoButton();
   await expect(page).toHaveTitle(/Admin Portal/);
+  await expect(loginPage.getHeading).toBeVisible();
   await page.context().storageState({ path: authFile });
 });
