@@ -17,11 +17,16 @@ jobs:
         run: npm ci
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
-      - name: Run Playwright tests
-        run: npx playwright test
+      - name: Run Client Portal Tests
+        run: npx playwright test --project='Client Portal' --reporter=list
         env:
-          EMAIL_ADDRESS: ${{vars.EMAIL_ADDRESS}}
-          PASSWORD: ${{vars.PASSWORD}}
+          CP_EMAIL_ADDRESS: ${{secrets.CP_EMAIL_ADDRESS}}
+          CP_PASSWORD: ${{secrets.CP_PASSWORD}}
+      - name: Run Admin Portal Tests
+        run: npx playwright test --project='Admin Portal' --reporter=list
+        env:
+          AP_EMAIL_ADDRESS: ${{secrets.AP_EMAIL_ADDRESS}}
+          AP_PASSWORD: ${{secrets.AP_PASSWORD}}
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
