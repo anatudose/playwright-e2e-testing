@@ -1,4 +1,4 @@
-const getApEnvVar = (): {
+export const getApEnvVar = (): {
   adminPortalEmailAddress: string;
   adminPortalPassword: string;
 } => {
