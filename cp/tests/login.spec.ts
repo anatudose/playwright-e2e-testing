@@ -1,9 +1,11 @@
 import { test, expect } from "@playwright/test";
+import { DashboardPage } from "../pages/DashboardPage";
 
-test.describe("Dashboard Redirect", () => {
-  test("should see company dashboard after log in", async ({ page }) => {
+test.describe("Log In", () => {
+  test("should be redirected to company dashboard after logging in", async ({ page }) => {
+    const dashboardPage = new DashboardPage(page)
+
     await page.goto("/");
-    const result = page.getByRole("heading", { name: "Dashboard" });
-    await expect(result).not.toBeEmpty();
+    await expect(dashboardPage.getDashboardHeading).toBeVisible()
   });
 });
