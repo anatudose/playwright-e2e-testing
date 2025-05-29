@@ -8,7 +8,7 @@ export async function setupApiContext(
   let apiContext = await request.newContext({
     baseURL: baseUrl,
     extraHTTPHeaders: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `${token}`,
     },
   });
   return apiContext;

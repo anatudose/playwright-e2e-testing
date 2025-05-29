@@ -8,6 +8,11 @@ const authFile = path.join(__dirname, "../../playwright/.auth/admin.json");
 setup("admin portal authentication", async ({ page }) => {
   const loginPage = new LoginPage(page);
 
+  const responsePromise = page.waitForResponse(response =>
+    response.url().includes('/api/Clients/SearchClients?name=') && response.status() === 200
+        && response.request().method() === 'GET'
+  );
+
   await page.goto("");
   await loginPage.enterEmail(getApEnvVar().adminPortalEmailAddress);
   await loginPage.clickNextButton();
@@ -18,9 +23,6 @@ setup("admin portal authentication", async ({ page }) => {
   await expect(loginPage.getHeading).toBeVisible();
   await page.context().storageState({ path: authFile });
 
-  const sessionStorage = (await page.context().storageState()).origins;
-
-  process.env.AP_BEARER_TOKEN = JSON.parse(
-    `${sessionStorage[0].localStorage[5].value}`
-  ).secret;
+  const token = (await responsePromise).request().headers().authorization
+  process.env.AP_BEARER_TOKEN = token
 });
