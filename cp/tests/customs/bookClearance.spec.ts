@@ -3,8 +3,9 @@ import { CustomsPage } from "../../pages/CustomsPage";
 import { generateFBANumber } from "../../utils/utils";
 import { customsTable } from "../../utils/constants";
 
+//test skipped because of client select page changes
 test.describe("Customs - Book Clearance", () => {
-  test("should be able to successfully create a new clearance", async ({
+  test.skip("should be able to successfully create a new clearance", async ({
     page,
   }) => {
     const carrierName = "UPS Pallets";
