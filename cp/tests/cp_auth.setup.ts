@@ -19,14 +19,7 @@ setup("client portal authentication", async ({ page }) => {
   await expect(page).toHaveURL(new RegExp("/company-profile-select/*"), {
     timeout: 10_000,
   });
-  await expect(loginPage.getLogo).toBeVisible();
-
-  //select company profile
-  await expect(loginPage.getSelectCompanyText).toBeVisible();
-  await loginPage.selectCompanyProfile("Devsoft");
-  await expect(dashboardPage.getDashboardHeading).toBeVisible({
-    timeout: 10_000,
-  });
+  await expect(loginPage.getHeadingAccounts).toBeVisible();
 
   await page.context().storageState({ path: cpAuthFile });
 });
