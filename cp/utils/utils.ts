@@ -1,12 +1,12 @@
 export const getCpEnvVar = (): {
   cpEmailAddress: string;
   cpPassword: string;
-  apBearerToken: string;
+  clientPortalApiUrl: string;
 } => {
   return {
     cpEmailAddress: process.env.CP_EMAIL_ADDRESS as string,
     cpPassword: process.env.CP_PASSWORD as string,
-    apBearerToken: process.env.AP_BEARER_TOKEN as string,
+    clientPortalApiUrl: process.env.CP_API_URL as string,
   };
 };
 
