@@ -7,6 +7,7 @@ export class LoginPage {
   readonly getSignInButton: Locator;
   readonly getSelectCompanyText: Locator;
   readonly getLogo: Locator;
+  readonly getHeadingAccounts: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -17,6 +18,7 @@ export class LoginPage {
       "Select which company profile you’d like to access"
     );
     this.getLogo = page.getByAltText("logo");
+    this.getHeadingAccounts = page.getByRole('heading', { name: 'Accounts' })
   }
 
   async enterEmail(email: string) {
