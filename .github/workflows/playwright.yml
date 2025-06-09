@@ -29,6 +29,7 @@ jobs:
         env:
           AP_EMAIL_ADDRESS: ${{secrets.AP_EMAIL_ADDRESS}}
           AP_PASSWORD: ${{secrets.AP_PASSWORD}}
+          AP_API_URL: ${{secrets.AP_API_URL}}
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
