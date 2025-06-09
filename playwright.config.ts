@@ -22,7 +22,7 @@ export default defineConfig({
   projects: [
     {
       name: "ap_setup",
-      testMatch: "ap/tests/ap_auth.setup.ts",
+      testMatch: "ap/tests/ap-auth.setup.ts",
       use: {
         baseURL: "https://thankful-sky-036bea803.5.azurestaticapps.net",
       },
@@ -30,7 +30,7 @@ export default defineConfig({
 
     {
       name: "cp_setup",
-      testMatch: "cp/tests/cp_auth.setup.ts",
+      testMatch: "cp/tests/cp-auth.setup.ts",
       use: {
         baseURL: "https://nice-glacier-0ed0b2503.5.azurestaticapps.net",
       },
