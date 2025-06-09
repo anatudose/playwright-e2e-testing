@@ -13,20 +13,18 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: lts/*
+          AP_EMAIL_ADDRESS: ${{ secrets.AP_EMAIL_ADDRESS }}
+          AP_PASSWORD: ${{ secrets.AP_PASSWORD }}
+          CP_EMAIL_ADDRESS: ${{ secrets.CP_EMAIL_ADDRESS }}
+          CP_PASSWORD: ${{ secrets.CP_PASSWORD }}
       - name: Install dependencies
         run: npm ci
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
       - name: Run Client Portal Tests
         run: npx playwright test --project='Client Portal' --reporter=list
-        env:
-          CP_EMAIL_ADDRESS: ${{ secrets.CP_EMAIL_ADDRESS }}
-          CP_PASSWORD: ${{ secrets.CP_PASSWORD }}
       - name: Run Admin Portal Tests
         run: npx playwright test --project='Admin Portal' --reporter=list
-        env:
-          AP_EMAIL_ADDRESS: ${{ secrets.AP_EMAIL_ADDRESS }}
-          AP_PASSWORD: ${{ secrets.AP_PASSWORD }}
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
