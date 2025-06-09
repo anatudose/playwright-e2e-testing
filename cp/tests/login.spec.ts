@@ -1,11 +1,11 @@
 import { test, expect } from "@playwright/test";
-import { DashboardPage } from "../pages/DashboardPage";
+import { LoginPage } from "../pages/LoginPage";
 
 test.describe("Log In", () => {
   test("should be redirected to company dashboard after logging in", async ({ page }) => {
-    const dashboardPage = new DashboardPage(page)
+    const loginPage = new LoginPage(page)
 
     await page.goto("/");
-    await expect(dashboardPage.getDashboardHeading).toBeVisible()
+    await expect(loginPage.getHeadingAccounts).toBeVisible();
   });
 });
