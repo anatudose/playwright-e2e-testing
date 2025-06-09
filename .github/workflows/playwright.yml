@@ -22,11 +22,14 @@ jobs:
         env:
           CP_EMAIL_ADDRESS: ${{secrets.CP_EMAIL_ADDRESS}}
           CP_PASSWORD: ${{secrets.CP_PASSWORD}}
+          AP_EMAIL_ADDRESS: ${{secrets.AP_EMAIL_ADDRESS}}
+          AP_PASSWORD: ${{secrets.AP_PASSWORD}}
       - name: Run Admin Portal Tests
         run: npx playwright test --project='Admin Portal' --reporter=list
         env:
           AP_EMAIL_ADDRESS: ${{secrets.AP_EMAIL_ADDRESS}}
           AP_PASSWORD: ${{secrets.AP_PASSWORD}}
+          AP_API_URL: ${{secrets.AP_API_URL}}
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
